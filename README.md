@@ -1,9 +1,3 @@
-### KARPENTER Installation updated repo "USE THIS" https://github.com/quickbooks2018/aws-eks-blueprints.git
-
-- https://github.com/quickbooks2018/aws-eks-blueprints.git
-
-##### https://www.youtube.com/@muse-elevarca
-
 ### Backend ###
 ##### S3
 
@@ -18,7 +12,7 @@ aws s3api put-bucket-versioning --bucket muse-elevar-terraform --versioning-conf
 
 ```
 
-##### Key Pair
+##### Key Pair - >Update according to your paths
 
 ```console
 if [ -d ~/.ssh ]
@@ -41,7 +35,7 @@ aws ec2 create-key-pair --key-name "${SSH_KEY_NAME}" --query 'KeyMaterial' --out
 fi
 ```
 
-##### KubeConfig
+##### KubeConfig -> Update according to your paths
 ```console
 if [ -d /root/.kube ]
 then

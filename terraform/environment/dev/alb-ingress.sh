@@ -4,9 +4,9 @@
 # https://github.com/aws/eks-charts
 # https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller
 
-EKS_CLUSTER="cloudgeeks-eks-dev"
-REGION="us-east-1"
-AWS_ACCOUNT_ID="602401143452"
+EKS_CLUSTER="muse-elevar-eks-dev"
+REGION="ap-south-1"
+AWS_ACCOUNT_ID="339263341917"
 # https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
 
 # Download IAM Policy

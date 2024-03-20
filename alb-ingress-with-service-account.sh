@@ -1,12 +1,12 @@
 #!/bin/bash
 set -x
 
-export CLUSTER_NAME="cloudgeeks-eks-dev"
-export AWS_DEFAULT_REGION="us-east-1"
+export CLUSTER_NAME="muse-elevar-eks-dev"
+export AWS_DEFAULT_REGION="ap-south-1"
 export MY_AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 export VPC_ID=$(aws eks describe-cluster --name ${CLUSTER_NAME} --region $AWS_DEFAULT_REGION | awk '{print $5}' | grep -i vpc)
 
-export AWS_ACCOUNT_ID="602401143452" # aws ecr account
+export AWS_ACCOUNT_ID="339263341917" # aws ecr account
 # https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
 
 # Download IAM Policy

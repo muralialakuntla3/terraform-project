@@ -9,12 +9,12 @@
   # Deployment & Scaling
   ######################
 
-  kubectl create deployment cloudgeeks-deployment --image=quickbooks2018/green:latest
+  kubectl create deployment muse-elevar-deployment --image=quickbooks2018/green:latest
 
-  kubectl scale --replicas=1 deployment/cloudgeeks-deployment
+  kubectl scale --replicas=1 deployment/muse-elevar-deployment
 
-  kubectl scale --replicas=20 deployment/cloudgeeks-deployment
+  kubectl scale --replicas=20 deployment/muse-elevar-deployment
 
-  kubectl scale --replicas=0 deployment/cloudgeeks-deployment
+  kubectl scale --replicas=0 deployment/muse-elevar-deployment
 
-  kubectl port-forward pod/cloudgeeks-deployment-57455c4785-qbnqr --address 0.0.0.0 8000:80 -n default
+  kubectl port-forward pod/muse-elevar-deployment-57455c4785-qbnqr --address 0.0.0.0 8000:80 -n default

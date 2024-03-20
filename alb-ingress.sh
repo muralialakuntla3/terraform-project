@@ -4,12 +4,12 @@
 # https://github.com/aws/eks-charts
 # https://github.com/aws/eks-charts/tree/master/stable/aws-load-balancer-controller
 
-EKS_CLUSTER="cloudgeeks-eks-dev"
-REGION="us-east-1"
+EKS_CLUSTER="muse-elevar-eks-dev"
+REGION="ap-south-1"
 MY_AWS_ACCOUNT="$(aws sts get-caller-identity --query Account --output text)"
 ROLE_NAME="iam-eks-workers-role"
 
-AWS_ACCOUNT_ID="602401143452"
+AWS_ACCOUNT_ID="339263341917"
 # https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
 
 # Download IAM Policy

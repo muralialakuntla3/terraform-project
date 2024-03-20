@@ -12,7 +12,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 terraform {
@@ -26,10 +26,10 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket         = "cloudgeeks-terraform"
-    key            = "env/dev/cloudgeeks-dev.tfstate"
-    region         = "us-east-1"
-   # dynamodb_table = "cloudgeeks-dev-terraform-backend-state-lock"
+    bucket         = "muse-elevar-terraform-backend"
+    key            = "env/dev/muse-elevar-dev.tfstate"
+    region         = "ap-south-1"
+   # dynamodb_table = "muse-elevar-dev-terraform-backend-state-lock"
   }
 }
 
@@ -46,7 +46,7 @@ module "eks_vpc" {
   name            = var.cluster_name
 
   cidr            = "10.60.0.0/16"
-  azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  azs             = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
   private_subnets = ["10.60.0.0/23", "10.60.2.0/23", "10.60.4.0/23"]
   public_subnets  = ["10.60.100.0/23", "10.60.102.0/24", "10.60.104.0/24"]
 
@@ -88,24 +88,24 @@ module "eks" {
   source  = "registry.terraform.io/terraform-aws-modules/eks/aws"
   version = "17.24.0"
 
-  cluster_version           = "1.21"
-  cluster_name              = "cloudgeeks-eks-dev"
+  cluster_version           = "1.29"
+  cluster_name              = "muse-elevar-eks-dev"
   vpc_id                    = module.eks_vpc.vpc_id
   subnets                   = module.eks_vpc.private_subnets
   workers_role_name         = "iam-eks-workers-role"
   create_eks                = true
   manage_aws_auth           = true
   write_kubeconfig          = true
-  kubeconfig_output_path    = "/root/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists 
+  kubeconfig_output_path    = "~/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists 
   kubeconfig_name           = "config"                                                                                         #  Solution: kubectl delete configmap aws-auth -n kube-system
   enable_irsa               = true                 # oidc
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/17.21.0/submodules/node_groups
   node_groups = {
-    cloudgeeks-eks-workers = {
+    muse-elevar-eks-workers = {
       create_launch_template = true
-      name                   = "cloudgeeks-eks-workers"  # Eks Workers Node Groups Name
+      name                   = "muse-elevar-eks-workers"  # Eks Workers Node Groups Name
       instance_types         = ["t3a.medium"]
       capacity_type          = "ON_DEMAND"
       desired_capacity       = 1
@@ -115,7 +115,7 @@ module "eks" {
       disk_size              = 30
       ebs_optimized          = true
       disk_encrypted         = true
-      key_name               = "terraform-cloudgeeks"
+      key_name               = "terraform-muse-elevar"
       enable_monitoring      = true
 
       additional_tags = {
@@ -168,7 +168,7 @@ module "karpenter_controller_iam_role" {
 ########################################################
 # Must Install the latest version of aws cli & terraform
 ########################################################
-# aws eks get-token --cluster-name cloudgeeks-eks-dev | jq '.apiVersion'    # Note: Install the lastest version of terraform & awscli is must  
+# aws eks get-token --cluster-name muse-elevar-eks-dev | jq '.apiVersion'    # Note: Install the lastest version of terraform & awscli is must  
 ########################
 # Karpenter installation
 ########################

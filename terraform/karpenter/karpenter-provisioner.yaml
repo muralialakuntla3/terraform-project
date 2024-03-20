@@ -12,7 +12,7 @@ spec:
     #   values: [t3a.large, t3.medium]           # Instances type/size
     - key: topology.kubernetes.io/zone
       operator: In
-      values: [us-east-1a, us-east-1b, us-east-1c] #Zones
+      values: [ap-south-1a, ap-south-1b, ap-south-1c] #Zones
     - key: karpenter.sh/capacity-type
       operator: In
       values: ["on-demand"]
@@ -21,5 +21,5 @@ spec:
       cpu: 1000
       memory: 1000Gi
   provider:
-    instanceProfile: KarpenterNodeInstanceProfile-cloudgeeks-eks-dev
+    instanceProfile: KarpenterNodeInstanceProfile-muse-elevar-eks-dev
   ttlSecondsAfterEmpty: 30

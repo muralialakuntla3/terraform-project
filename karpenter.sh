@@ -3,8 +3,8 @@
 # # https://karpenter.sh/v0.8.2/getting-started/migrating-from-cas/
 
 
-export CLUSTER_NAME="cloudgeeks-eks-dev"
-export REGION="us-east-1"
+export CLUSTER_NAME="muse-elevar-eks-dev"
+export REGION="ap-south-1"
 export VPC_ID=$(aws eks describe-cluster --name ${CLUSTER_NAME} --region $REGION | awk '{print $5}' | grep -i vpc)
 export CLUSTER_ENDPOINT="$(aws eks describe-cluster --name ${CLUSTER_NAME} --query "cluster.endpoint" --output text)"
 export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"

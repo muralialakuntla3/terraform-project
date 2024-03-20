@@ -49,7 +49,7 @@ kubectl get secret argocd-initial-admin-secret -o yaml -n argocd
 ################################
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
 
-ssh-keygen -t ed25519 -f cloudgeeks -C "default"
+ssh-keygen -t ed25519 -f muse-elevar -C "default"
 
 ##########################
 # ARGOcd CLI Insatallation

@@ -182,3 +182,17 @@ module "eks_vpc" {
 #   cluster_ca_certificate                    = base64decode(module.eks.cluster_certificate_authority_data) 
 #   karpenter_version                         = "v0.5.3"
 # }
+
+
+##RDS Module
+module "rds" {
+  source = "../../modules/rds"
+  db_subnet_groups = module.eks_vpc.private_subnets
+  vpc_security_group_ids = [module.eks_vpc.default_security_group_id]
+}
+
+
+#ECR Module
+module "ecr" {
+  source = "../../modules/ecr"
+}

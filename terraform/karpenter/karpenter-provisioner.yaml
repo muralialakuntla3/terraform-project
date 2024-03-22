@@ -5,21 +5,18 @@ metadata:
   name: default
 spec:
   labels:
-    team: dev-team
+    team: ${team_name}
   requirements:
-    # - key: node.kubernetes.io/instance-type
-    #   operator: In
-    #   values: [t3a.large, t3.medium]           # Instances type/size
     - key: topology.kubernetes.io/zone
       operator: In
-      values: [ap-south-1a, ap-south-1b, ap-south-1c] #Zones
+      values: ${zones}
     - key: karpenter.sh/capacity-type
       operator: In
-      values: ["on-demand"]
+      values: ${capacity_types}
   limits:
     resources:
-      cpu: 1000
-      memory: 1000Gi
+      cpu: ${cpu_limit}
+      memory: ${memory_limit}
   provider:
-    instanceProfile: KarpenterNodeInstanceProfile-muse-elevar-eks-dev
-  ttlSecondsAfterEmpty: 30
+    instanceProfile: ${instance_profile}
+  ttlSecondsAfterEmpty: ${ttl_seconds_after_empty}

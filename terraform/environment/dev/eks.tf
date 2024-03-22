@@ -18,6 +18,7 @@ module "eks" {
   enable_irsa               = true                 # oidc
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
 
+
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/17.21.0/submodules/node_groups
   node_groups = {
     muse-elevar-eks-workers = {
@@ -43,13 +44,16 @@ module "eks" {
     }
   }
 
-      tags = {
-    # Tag node group resources for Karpenter auto-discovery
-    # NOTE - if creating multiple security groups with this module, only tag the
-    # security group that Karpenter should utilize with the following tag
+    tags = {
+    Project      = var.project
+    Terraform    = "true"
+    Applicati_CI = var.Applicati_CI
+    UAI          = var.UAI
+    Email_ID     = var.email_id
     "karpenter.sh/discovery" = var.cluster_name
+    
   }
-
+  
 }
 
 

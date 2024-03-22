@@ -70,3 +70,17 @@ variable "db_subnet_groups" {
   type = list(string)
   default = [""]
 }
+ variable "email_id" {
+  type = string
+  default = "museelevar@aws.com"
+}
+#Tags
+variable "project" {
+  default = "Muse-Elevar"
+}
+variable "Applicati_CI" {
+default = "1101229882"
+}
+variable "UAI" {
+  default = "UAI3056925"
+}

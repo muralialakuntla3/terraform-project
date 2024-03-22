@@ -13,8 +13,15 @@ resource "aws_db_instance" "default" {
   backup_retention_period   = var.backup_retention_period
   vpc_security_group_ids    = var.vpc_security_group_ids
   db_subnet_group_name      = aws_db_subnet_group.subnet_group.id
+  skip_final_snapshot = true
   tags = {
     Name = "Muse-Elevar-RDS"
+    Project      = var.project
+    Terraform    = "true"
+    Applicati_CI = var.Applicati_CI
+    UAI          = var.UAI
+    Email_ID     = var.email_id
+  
   }
 }
 
@@ -23,5 +30,10 @@ resource "aws_db_subnet_group" "subnet_group" {
 
   tags = {
     Name = "RDS DB subnet group"
+    Project      = var.project
+    Terraform    = "true"
+    Applicati_CI = var.Applicati_CI
+    UAI          = var.UAI
+    Email_ID     = var.email_id
   }
 }

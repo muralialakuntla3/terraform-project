@@ -17,6 +17,18 @@ module "eks" {
   kubeconfig_name           = "config"                                                                                         #  Solution: kubectl delete configmap aws-auth -n kube-system
   enable_irsa               = true                 # oidc
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  map_users                 = [
+    {
+      userarn               = "arn:aws:iam::339263341917:user/Dinesh"
+      username              = "dinesh" 
+      groups                = ["system:masters"] 
+    },
+    {
+      userarn               = "arn:aws:iam::339263341917:user/vaishnavi"
+      username              = "vaishnavi" 
+      groups                = ["system:masters"]
+    }
+  ]
 
 
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/17.21.0/submodules/node_groups

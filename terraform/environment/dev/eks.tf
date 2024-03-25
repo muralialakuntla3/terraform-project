@@ -47,7 +47,6 @@ module "eks" {
       disk_encrypted         = true
       key_name               = var.key_name
       enable_monitoring      = true
-
       additional_tags = {
         "Name"                     = "eks-worker"                            # Tags for Cluster Worker Nodes
         "karpenter.sh/discovery"   = var.cluster_name
@@ -56,16 +55,17 @@ module "eks" {
     }
   }
 
+
     tags = {
-    Project      = var.project
-    Terraform    = "true"
-    Applicati_CI = var.Applicati_CI
-    UAI          = var.UAI
-    Email_ID     = var.email_id
-    "karpenter.sh/discovery" = var.cluster_name
+      Project      = var.project
+      Terraform    = "true"
+      Applicati_CI = var.Applicati_CI
+      UAI          = var.UAI
+      Email_ID     = var.email_id
+      "karpenter.sh/discovery" = var.cluster_name
     
   }
-  
+
 }
 
 

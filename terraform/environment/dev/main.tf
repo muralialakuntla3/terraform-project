@@ -29,6 +29,7 @@ terraform {
     bucket         =  "muse-elevar-terraform-backend"
     key            =  "env/dev/muse-elevar-dev.tfstate"
     region         =  "ap-south-1"
+    dynamodb_table =  "terraform-lock-table"
   }
 }
 

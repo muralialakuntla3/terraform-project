@@ -1,6 +1,6 @@
 provider "helm" {
   kubernetes {
-    config_path = "~/.kube/config"
+    config_path = "/Users/dinesh/.kube/config"
   }
 }
 
@@ -10,6 +10,11 @@ resource "kubernetes_namespace" "fluentbit_namespace" {
     name = var.namespace_name
   }
 }
+
+resource "aws_s3_bucket" "museelevar_fluentbit_logs_bucket" {
+  bucket = "fluentbit-logs-muse-elever"
+}
+
 
 # Define the AWS IAM role for Fluent Bit
 resource "aws_iam_role" "fluentbit_role" {
@@ -86,7 +91,7 @@ resource "kubernetes_config_map" "fluentbit_config_map" {
 
       [OUTPUT]
         Name s3
-        Match kube.* muse-elevar-terraform-backend
+        Match kube.* fluentbit-logs-muse-elever
         S3_Key_Format /%Y/%m/%d/%H 
     EOF
   }
@@ -159,7 +164,7 @@ resource "helm_release" "fluentbit" {
         Tag: kube.*
       output:
         Name: s3
-        Match: kube.* muse-elevar-terraform-backend
+        Match: kube.* fluentbit-logs-muse-elever
         S3_Key_Format: "/%Y/%m/%d/%H"
     EOF
   ]

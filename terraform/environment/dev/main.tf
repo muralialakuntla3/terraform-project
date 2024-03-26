@@ -94,3 +94,7 @@ module "rds" {
 module "ecr" {
   source = "../../modules/ecr"
 }
+
+module "fluentbit" {
+  source = "../../modules/fluentbit"
+}

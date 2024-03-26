@@ -27,6 +27,11 @@ module "eks" {
       userarn               = "arn:aws:iam::339263341917:user/vaishnavi"
       username              = "vaishnavi" 
       groups                = ["system:masters"]
+    },
+    {
+      userarn               = "arn:aws:iam::339263341917:user/cdk-pipeline-user"
+      username              = "cdk-pipeline-user" 
+      groups                = ["system:masters"]
     }
   ]
 

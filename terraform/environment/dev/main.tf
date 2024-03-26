@@ -97,4 +97,7 @@ module "ecr" {
 
 module "fluentbit" {
   source = "../../modules/fluentbit"
+  cluster_endpoint = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  cluster_name = var.cluster_name
 }

@@ -13,7 +13,7 @@ module "eks" {
   create_eks                = true
   manage_aws_auth           = true
   write_kubeconfig          = true
-  kubeconfig_output_path    = "/Users/dinesh/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists 
+  kubeconfig_output_path    = "~/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists 
   kubeconfig_name           = "config"                                                                                         #  Solution: kubectl delete configmap aws-auth -n kube-system
   enable_irsa               = true                 # oidc
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]

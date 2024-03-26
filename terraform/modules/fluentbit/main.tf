@@ -1,6 +1,14 @@
 provider "helm" {
   kubernetes {
-    config_path = "/Users/dinesh/.kube/config"
+    host                   = var.cluster_endpoint
+    cluster_ca_certificate = var.cluster_ca_certificate
+    
+# aws eks get-token --cluster-name muse-elevar-eks-dev | jq '.apiVersion'    # Note: Install the lastest version of terraform & awscli is must 
+    exec {
+      api_version = "client.authentication.k8s.io/v1beta1"
+      command     = "aws"
+      args        = ["eks", "get-token", "--cluster-name", var.cluster_name]
+    }
   }
 }
 
@@ -49,7 +57,7 @@ resource "aws_iam_policy" "fluentbit_policy" {
           "s3:GetBucketLocation"
         ],
         "Resource": [
-          var.s3_bucket_arn
+          aws_s3_bucket.museelevar_fluentbit_logs_bucket.arn
         ]
       }
     ]

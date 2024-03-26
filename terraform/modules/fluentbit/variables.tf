@@ -18,6 +18,18 @@ variable "s3_bucket_arn" {
   default     = "arn:aws:s3:::muse-elevar-terraform-backend/*"
 }
 
+variable "cluster_endpoint" {
+  type = string
+}
+
+variable "cluster_ca_certificate" {
+  type = string
+}
+
+variable "cluster_name" {
+  type = string
+}
+
 # variable "fluentbit_config" {
 #   description = "Fluent Bit configuration"
 #   default     = <<-EOF

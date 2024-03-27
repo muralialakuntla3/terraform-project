@@ -11,6 +11,9 @@ resource "aws_db_instance" "default" {
   password                  = var.password
   multi_az                  = var.multi_az
   backup_retention_period   = var.backup_retention_period
+  storage_encrypted         = true #DB cluster encryption must be enabled, Encryption at rest must be enabled for all RDS instances and DB snapshots
+  publicly_accessible       = false #Database instance must not allow public accessibility
+  copy_tags_to_snapshot     = true #Copy tags to snapshots should be enabled on instances
   vpc_security_group_ids    = var.vpc_security_group_ids
   db_subnet_group_name      = aws_db_subnet_group.subnet_group.id
   skip_final_snapshot = true

@@ -83,11 +83,11 @@ module "eks_vpc" {
 
 
 ##RDS Module
-module "rds" {
-  source = "../../modules/rds"
-  db_subnet_groups = module.eks_vpc.private_subnets
-  vpc_security_group_ids = [module.eks_vpc.default_security_group_id]
-}
+# module "rds" {
+#   source = "../../modules/rds"
+#   db_subnet_groups = module.eks_vpc.private_subnets
+#   vpc_security_group_ids = [module.eks_vpc.default_security_group_id]
+# }
 
 
 #ECR Module

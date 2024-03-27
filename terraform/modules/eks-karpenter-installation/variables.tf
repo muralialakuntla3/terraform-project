@@ -7,12 +7,13 @@ variable "iam_assumable_role_karpenter_iam_role_arn" {
 }
 
 variable "cluster_name" {
+  type = string
   default = "muse-elevar-eks-dev"
 }
 
 variable "cluster_endpoint" {
   type = string
-}
+  }
 
 variable "instance_profile" {
   type = string

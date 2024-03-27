@@ -17,7 +17,6 @@ provider "helm" {
 }
 
 resource "helm_release" "karpenter" {
-  depends_on       = [var.kubeconfig]
   namespace        = "karpenter"
   create_namespace = true
 
@@ -46,5 +45,6 @@ resource "helm_release" "karpenter" {
     name  = "aws.defaultInstanceProfile"
     value = var.instance_profile
   }
+  
   
 }

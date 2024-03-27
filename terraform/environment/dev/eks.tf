@@ -10,6 +10,8 @@ module "eks" {
   vpc_id                    = module.eks_vpc.vpc_id
   subnets                   = module.eks_vpc.private_subnets
   workers_role_name         = var.workers_role_name
+  cluster_endpoint_public_access = true   #IAM OIDC is integrated and map users are listed below, only the iam users will be able to access the cluster.
+  cluster_endpoint_private_access = false #Private cluster endpoint
   create_eks                = true
   manage_aws_auth           = true
   write_kubeconfig          = true

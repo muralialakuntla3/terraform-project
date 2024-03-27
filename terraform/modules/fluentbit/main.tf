@@ -64,12 +64,37 @@ resource "aws_iam_policy" "fluentbit_policy" {
   })
 }
 
+# Define the AWS IAM policy for Fluent Bit to access CloudWatch Logs
+resource "aws_iam_policy" "cloudwatch_policy" {
+  name        = "fluentbit-cloudwatch-logs-policy"
+  description = "Policy for Fluent Bit to access CloudWatch Logs"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        "Resource":  "arn:aws:logs:ap-south-1:339263341917:log-group:/aws/eks/muse-elevar-eks-dev/cluster:*"
+      }
+    ]
+  })
+}
+
+
 # Attach the IAM policy to the IAM role
 resource "aws_iam_role_policy_attachment" "fluentbit_policy_attachment" {
   role       = aws_iam_role.fluentbit_role.name
   policy_arn = aws_iam_policy.fluentbit_policy.arn
 }
 
+resource "aws_iam_role_policy_attachment" "fluentbit_cloudwatch_logs_policy_attachment" {
+  role       = aws_iam_role.fluentbit_role.name
+  policy_arn = aws_iam_policy.cloudwatch_policy.arn
+}
 # Define the Fluent Bit configuration as a Kubernetes ConfigMap
 resource "kubernetes_config_map" "fluentbit_config_map" {
   metadata {
@@ -83,23 +108,39 @@ resource "kubernetes_config_map" "fluentbit_config_map" {
           Flush 1
           Daemon Off
           Log_Level info
-          Parsers_File parsers.conf
-
-          # Set AWS S3 region
-          set {
-            name  = "backend.s3.region"
-            value = "ap-south-1"
-          }
+          HTTP_Server On
+          HTTP_Listen 0.0.0.0
+          HTTP_Port 2020
+  
 
       [INPUT]
           Name tail
           Path /var/log/containers/*.log
           Parser docker
           Tag kube.*
+          Mem_Buf_Limit 5MB
+          Skip_Long_Lines On
+
+      [FILTER]
+        Name kubernetes
+        Match kube.*
+        Merge_Log On
+        Merge_Log_Trim On
+        Labels On
+        Annotations Off
+        K8S-Logging.Parser Off
+        K8S-Logging.Exclude Off
+
+      [INPUT]
+        Name systemd
+        Tag host.*
+        Systemd_Filter _SYSTEMD_UNIT=kubelet.service
+        Read_From_Tail On
 
       [OUTPUT]
         Name s3
-        Match kube.* fluentbit-logs-muse-elever
+        Match kube.* 
+        bucket fluentbit-logs-muse-elever
         S3_Key_Format /%Y/%m/%d/%H 
     EOF
   }
@@ -177,3 +218,4 @@ resource "helm_release" "fluentbit" {
     EOF
   ]
 }
+

@@ -19,8 +19,18 @@ resource "kubernetes_namespace" "fluentbit_namespace" {
   }
 }
 
+#########################################################################################
+# Use the correct UAI Tag to be informed by updates or vulnerabilities in your resources
+#########################################################################################
 resource "aws_s3_bucket" "museelevar_fluentbit_logs_bucket" {
   bucket = "fluentbit-logs-muse-elever"
+  tags = {
+      Project      = var.project
+      Terraform    = var.Terraform
+      Applicati_CI = var.Applicati_CI
+      UAI          = var.UAI
+      Email_ID     = var.email_id
+  }
 }
 
 
@@ -42,11 +52,14 @@ resource "aws_iam_role" "fluentbit_role" {
   })
 }
 
-# Define the AWS IAM policy for Fluent Bit to access S3
+##################################################
+# Restrict premissions to S3 bucket appropriately
+##################################################
+
 resource "aws_iam_policy" "fluentbit_policy" {
   name        = var.iam_policy_name
   description = "Policy for Fluent Bit to access S3"
-
+  
   policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
@@ -57,7 +70,8 @@ resource "aws_iam_policy" "fluentbit_policy" {
           "s3:GetBucketLocation"
         ],
         "Resource": [
-          aws_s3_bucket.museelevar_fluentbit_logs_bucket.arn
+          "${aws_s3_bucket.museelevar_fluentbit_logs_bucket.arn}",
+          "${aws_s3_bucket.museelevar_fluentbit_logs_bucket.arn}/*"
         ]
       }
     ]

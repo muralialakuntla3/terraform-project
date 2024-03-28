@@ -93,3 +93,25 @@ variable "helm_chart_version" {
   description = "Version of the Helm chart for Fluent Bit"
   default     = "2.13.0"
 }
+
+variable "email_id" {
+  type = string
+  default = "museelevar@aws.com"
+}
+
+variable "project" {
+  default = "Muse-Elevar"
+}
+
+variable "Applicati_CI" {
+default = "1101229882"
+}
+
+variable "UAI" {
+  default = "UAI3056925"
+}
+
+variable "Terraform" {
+  default = true
+}
+

@@ -21,16 +21,11 @@ terraform {
 
 
 ### Backend ###
-# S3
+# S3 # Use terraform init -backend-config=backend.conf
 ###############
 
 terraform {
-  backend "s3" {
-    bucket         =  "muse-elevar-terraform-backend"
-    key            =  "env/dev/muse-elevar-dev.tfstate"
-    region         =  "ap-south-1"
-    dynamodb_table =  "terraform-lock-table"
-  }
+  backend "s3" {}
 }
 
 #  Error: configmaps "aws-auth" already exists

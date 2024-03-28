@@ -7,7 +7,6 @@ variable "email_id" {
   type = string
   default = "museelevar@aws.com"
 }
-#Tags
 variable "project" {
   default = "Muse-Elevar"
 }

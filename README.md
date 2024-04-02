@@ -1,3 +1,21 @@
+## Topics in this Project
+- code in aws repo (aws codecommit)
+- Fluent bit - logging
+- helm charts - k8s
+- remote backend - s3
+- terrafom lock - dynamo db
+- terraform modules - import & creation
+- Karpenter - Node management
+- cloud watch
+- rbac - serviceaccount & Users
+- ECR - Permissions IAM
+- HPA
+- Metrics server
+- Ingress
+- argocd
+- grafana dashboard
+
+
 ### Backend ###
 ##### S3
 

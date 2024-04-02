@@ -10,30 +10,19 @@ module "eks" {
   vpc_id                    = module.eks_vpc.vpc_id
   subnets                   = module.eks_vpc.private_subnets
   workers_role_name         = var.workers_role_name
-  ####################################################################
-  # Private cluster endpoint access should be used whenever possible 
-  ####################################################################
-  cluster_endpoint_public_access = true   #IAM OIDC is integrated and map users are listed below, only the iam users will be able to access the cluster.
-  cluster_endpoint_private_access = false #Private cluster endpoint
   create_eks                = true
   manage_aws_auth           = true
   write_kubeconfig          = true
-  kubeconfig_output_path    = "~/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists  #  Solution: kubectl delete configmap aws-auth -n kube-system
-  kubeconfig_name           = "config"                                                                                        
-  enable_irsa               = true              
+  kubeconfig_output_path    = "~/.kube/config" # touch /root/.kube/config   # for terraform HELM provider, we neeed this + #  Error: configmaps "aws-auth" already exists 
+  kubeconfig_name           = "config"                                                                                         #  Solution: kubectl delete configmap aws-auth -n kube-system
+  enable_irsa               = true                 # oidc
   cluster_enabled_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  map_users                 = var.users_list_map
-
-###############################################################################################################
-# Configure cluster security group to restrict traffic solely from known static IP addresses.                 
-# Limit the access list to include known hosts, services, or specific employees only. (Do not allow 0.0.0.0/0)
-###############################################################################################################
 
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/17.21.0/submodules/node_groups
   node_groups = {
     muse-elevar-eks-workers = {
       create_launch_template = true
-      name                   = var.node_group_name  
+      name                   = var.node_group_name  # Eks Workers Node Groups Name
       instance_types         = var.instance_types
       capacity_type          = var.capacity_type
       desired_capacity       = var.desired_capacity
@@ -45,23 +34,20 @@ module "eks" {
       disk_encrypted         = true
       key_name               = var.key_name
       enable_monitoring      = true
+
       additional_tags = {
-        "Name"                     = "eks-worker"                            
+        "Name"                     = "eks-worker"                            # Tags for Cluster Worker Nodes
         "karpenter.sh/discovery"   = var.cluster_name
       }
 
     }
   }
 
-
-    tags = {
-      Project      = var.project
-      Terraform    = "true"
-      Applicati_CI = var.Applicati_CI
-      UAI          = var.UAI
-      Email_ID     = var.email_id
-      "karpenter.sh/discovery" = var.cluster_name
-    
+      tags = {
+    # Tag node group resources for Karpenter auto-discovery
+    # NOTE - if creating multiple security groups with this module, only tag the
+    # security group that Karpenter should utilize with the following tag
+    "karpenter.sh/discovery" = var.cluster_name
   }
 
 }

@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "muse-elevar-eks-dev"
+  type = string
 }
 
 variable "cluster_oidc_issuer_url" {
@@ -7,16 +7,3 @@ variable "cluster_oidc_issuer_url" {
 }
 
 
-variable "email_id" {
-  type = string
-  default = "museelevar@aws.com"
-}
-variable "project" {
-  default = "Muse-Elevar"
-}
-variable "Applicati_CI" {
-default = "1101229882"
-}
-variable "UAI" {
-  default = "UAI3056925"
-}

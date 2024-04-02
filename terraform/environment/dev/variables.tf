@@ -4,6 +4,12 @@ variable "cluster_name" {
 variable "region" {
   default = "ap-south-1"
 }
+# # Declare the data source
+# data "aws_availability_zones" "available_zones" {
+#   state = "available"
+# }
+
+
 #Eks vpc
 variable "vpc_cidr" {
   default = "10.60.0.0/16"
@@ -53,50 +59,4 @@ variable "workers_role_name" {
 }
 variable "node_group_name" {
   default = "muse-elevar-eks-workers"
-}
-variable "email_id" {
-  type = string
-  default = "museelevar@aws.com"
-}
-#Tags
-variable "project" {
-  default = "Muse-Elevar"
-}
-variable "Applicati_CI" {
-default = "1101229882"
-}
-variable "UAI" {
-  default = "UAI3056925"
-}
-
-variable "backend_s3_bucket" {
-  default = "muse-elevar-terraform-backend"
-}
-
-variable "backend_s3_key" {
-  default = "env/dev/muse-elevar-dev.tfstate"
-}
-
-variable "backend_dynamo_db_table" {
-  default = "terraform-lock-table"
-}
-
-variable "users_list_map" {
-  default = [
-    {
-      userarn               = "arn:aws:iam::339263341917:user/Dinesh"
-      username              = "dinesh" 
-      groups                = ["system:masters"] 
-    },
-    {
-      userarn               = "arn:aws:iam::339263341917:user/vaishnavi"
-      username              = "vaishnavi" 
-      groups                = ["system:masters"]
-    },
-    {
-      userarn               = "arn:aws:iam::339263341917:user/cdk-pipeline-user"
-      username              = "cdk-pipeline-user" 
-      groups                = ["system:masters"]
-    }
-  ]
 }

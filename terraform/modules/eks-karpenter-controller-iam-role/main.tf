@@ -5,13 +5,6 @@ module "iam_assumable_role_karpenter" {
   role_name                     = "karpenter-controller-${var.cluster_name}"
   provider_url                  = var.cluster_oidc_issuer_url
   oidc_fully_qualified_subjects = ["system:serviceaccount:karpenter:karpenter"]
-   tags = {
-    Project      = var.project
-    Terraform    = "true"
-    Applicati_CI = var.Applicati_CI
-    UAI          = var.UAI
-    Email_ID     = var.email_id
-  }
 }
 
 resource "aws_iam_role_policy" "karpenter_contoller" {
